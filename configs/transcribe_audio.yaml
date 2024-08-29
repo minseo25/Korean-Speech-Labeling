@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - _self_
+
+audio_dir: 'syuka'
+start_idx: 0          # start transcribing from this index

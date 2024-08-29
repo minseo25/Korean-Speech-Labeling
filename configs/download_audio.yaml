@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - _self_
+
+channel_url: 'https://www.youtube.com/@syukaworld/videos'
+output_dir: 'syuka'

@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "korean-speech-labeling"
+version = "0.1.0"
+description = "prepare dataset for Korean TTS training"
+authors = ["minseo25"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+yt-dlp = "^2024.8.6"
+omegaconf = "^2.3.0"
+hydra-core = "^1.3.2"
+pydub = "^0.25.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
