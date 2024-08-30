@@ -15,4 +15,7 @@ transcribe: ## Transcribe korean audio files using whisper model
 	poetry run python src/transcribe_audio.py
 
 label: ## Label korean audio files and transcriptions
-	poetry run python src/labeling.py
+	poetry run python src/label_transcripts.py
+
+postprocess: ## Postprocess dataset (inaccurate segmentation)
+	poetry run python src/postprocess_labels.py
