@@ -48,9 +48,9 @@ def labeling(target_dir: str) -> None:
             
             with open(os.path.join(subtitle_dir, f"{name}.json"), "r", encoding="utf-8") as f:
                 data = json.load(f)
-                for j, segment in enumerate(data["segments"]):
-                    start = segment["start"] * 1000  # pydub는 밀리초 단위 사용
-                    end = segment["end"] * 1000
+                for j, segment in enumerate(data):
+                    start = segment["timestamp"][0] * 1000  # pydub는 밀리초 단위 사용
+                    end = segment["timestamp"][1] * 1000
                     transcript = segment["text"]
                     decomposed_transcript = decompose_korean(transcript)
                     file.write(f"{i+1}/{j+1}.wav|{transcript}|{decomposed_transcript}|{(end-start)/1000:.2f}|KO\n")

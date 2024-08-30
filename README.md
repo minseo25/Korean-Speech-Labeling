@@ -26,6 +26,7 @@ poetry run pip3 install torch torchvision torchaudio --index-url https://downloa
 ## _Workflow_
 
 STEP1. download audio files
+- m4a format, medium quality
 - set `configs/download_audio.yaml`
 - and "딸깍"
 
@@ -34,7 +35,8 @@ make download
 ```
 
 STEP1.5. preprocess audio files (optional)
-- set `configs/preprocess_audio.yaml` (인트로, 아웃트로 길이 ms로 지정)
+- 인트로, 아웃트로 길이 ms로 지정 시 잘라버림
+- set `configs/preprocess_audio.yaml`
 - and "딸깍"
 
 ```shell
@@ -42,6 +44,7 @@ make preprocess
 ```
 
 STEP2. transcribe audio files using whisper
+- 약간의 전처리(wav format, sampling rate 조절, mono) whisper 모델에 넣어 transcribe
 - set `configs/transcribe_audio.yaml`
 - and "딸깍"
 

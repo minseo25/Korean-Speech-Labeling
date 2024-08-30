@@ -11,6 +11,9 @@ yt-dlp = "^2024.8.6"
 omegaconf = "^2.3.0"
 hydra-core = "^1.3.2"
 pydub = "^0.25.1"
+transformers = "^4.44.2"
+torch = "^2.4.0"
+torchaudio = "^2.4.0"
 
 [build-system]
 requires = ["poetry-core"]
