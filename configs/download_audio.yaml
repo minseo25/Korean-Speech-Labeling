@@ -2,5 +2,6 @@ defaults:
   - default
   - _self_
 
-channel_url: 'https://www.youtube.com/@syukaworld/videos'
-output_dir: 'syuka'
+channel_url: 'https://www.youtube.com/@syukaworld/videos'   # youtube url
+output_dir: 'syuka'                                         # output directory under data/
+start_idx: 0                                                # index to start downloading from

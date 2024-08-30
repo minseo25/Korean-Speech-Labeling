@@ -1,0 +1,5 @@
+defaults:
+  - default
+  - _self_
+
+target_dir: 'syuka'  # output directory under labeled_data/

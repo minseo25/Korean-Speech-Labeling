@@ -50,7 +50,7 @@ def trim_audio_files(folder_path: str, trim_start: int, trim_end: int) -> None:
 
 @hydra.main(version_base='1.3', config_path='../configs', config_name='preprocess_audio.yaml')
 def main(cfg: DictConfig) -> None:
-    folder_path = f'data/{cfg.audio_dir}/korean_audio'
+    folder_path = os.path.join('data', cfg.audio_dir, 'korean_audio')
     trim_audio_files(folder_path, trim_start=cfg.trim_start, trim_end=cfg.trim_end)
 
 if __name__ == "__main__":

@@ -2,5 +2,5 @@ defaults:
   - default
   - _self_
 
-audio_dir: 'syuka'
+audio_dir: 'syuka'    # audio directory under data/
 start_idx: 0          # start transcribing from this index

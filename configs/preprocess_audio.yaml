@@ -2,6 +2,6 @@ defaults:
   - default
   - _self_
 
-audio_dir: 'syuka'
+audio_dir: 'syuka'    # audio directory under data/
 trim_start: 6300      # in milliseconds
 trim_end: 0           # in milliseconds

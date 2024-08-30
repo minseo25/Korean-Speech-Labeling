@@ -27,27 +27,26 @@ def decompose_korean(text: str) -> str:
 
 
 def labeling(target_dir: str) -> None:
-    audio_dir = f'data/{target_dir}/korean_audio'
-    subtitle_dir = f'data/{target_dir}/korean_subtitle'
-    output_dir = f'labeled_data/{target_dir}'
+    audio_dir = os.path.join('data', target_dir, 'korean_audio')
+    subtitle_dir = os.path.join('data', target_dir, 'korean_subtitle')
+    output_dir = os.path.join('labeled_data', target_dir)
 
     os.makedirs(output_dir, exist_ok=True)
 
     audios = os.listdir(audio_dir)
-    subtitles = os.listdir(subtitle_dir)
 
-    with open(f"{output_dir}/transcripts.txt", "a", encoding="utf-8") as file:
+    with open(os.path.join(output_dir, "transcripts.txt"), "a", encoding="utf-8") as file:
         for i, audio in enumerate(audios):
             print(f"Processing {i}: {audio}...")
             name = os.path.splitext(audio)[0]
-            audio_output_dir = f"{output_dir}/{i+1}"
+            audio_output_dir = os.path.join(output_dir, str(i+1))
             os.makedirs(audio_output_dir, exist_ok=True)
 
             # 오디오 파일 열기
             audio_file_path = os.path.join(audio_dir, audio)
             audio_segment = AudioSegment.from_file(audio_file_path, format="m4a")
             
-            with open(f"{subtitle_dir}/{name}.json", "r", encoding="utf-8") as f:
+            with open(os.path.join(subtitle_dir, f"{name}.json"), "r", encoding="utf-8") as f:
                 data = json.load(f)
                 for j, segment in enumerate(data["segments"]):
                     start = segment["start"] * 1000  # pydub는 밀리초 단위 사용
@@ -60,7 +59,7 @@ def labeling(target_dir: str) -> None:
                     segment_audio = audio_segment[start:end]
                     segment_audio.export(output_wav_path, format="wav")
 
-@hydra.main(version_base='1.3', config_path='../configs', config_name='labeling.yaml')
+@hydra.main(version_base='1.3', config_path='../configs', config_name='label_transcripts.yaml')
 def main(cfg: DictConfig) -> None:
     labeling(cfg.target_dir)
 

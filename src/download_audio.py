@@ -3,11 +3,11 @@ import os
 from omegaconf import DictConfig
 import hydra
 
-class YoutubeAudioSubtitleDownloader:
+class YoutubeAudioDownloader:
   def __init__(self, channel_url: str, output_dir: str) -> None:
     self.channel_url = channel_url
-    self.output_dir_audio = f'data/{output_dir}/korean_audio'
-    self.video_url_path = f'data/{output_dir}/video_urls.txt'
+    self.output_dir_audio = os.path.join('data', output_dir, 'korean_audio')
+    self.video_url_path = os.path.join('data', output_dir, 'video_urls.txt')
 
     if not os.path.exists(self.output_dir_audio):
       os.makedirs(self.output_dir_audio)
@@ -76,9 +76,9 @@ class YoutubeAudioSubtitleDownloader:
 
 @hydra.main(version_base='1.3', config_path='../configs', config_name='download_audio.yaml')
 def main(cfg: DictConfig) -> None:
-  downloader = YoutubeAudioSubtitleDownloader(cfg.channel_url, cfg.output_dir)
+  downloader = YoutubeAudioDownloader(cfg.channel_url, cfg.output_dir)
 
-  for url in downloader.video_urls:
+  for url in downloader.video_urls[cfg.start_idx:]:
     print(f"Processing {url}")
     downloader.download_korean_audio(url)
 

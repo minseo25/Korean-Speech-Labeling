@@ -14,7 +14,7 @@ def get_transcripts(audio_path: str, subtitle_path: str, start_idx: int) -> None
         i += 1
         # get the name of the file without the extension
         name = os.path.splitext(audio_file)[0]
-        output_file = f"{subtitle_path}/{name}.json"
+        output_file = os.path.join(subtitle_path, f"{name}.json")
 
         # Check if the JSON file already exists
         if os.path.exists(output_file):
@@ -22,7 +22,8 @@ def get_transcripts(audio_path: str, subtitle_path: str, start_idx: int) -> None
             continue
 
         # Transcribe the audio file
-        result = model.transcribe(f"{audio_path}/{audio_file}", language="ko")
+        audio_file_path = os.path.join(audio_path, audio_file)
+        result = model.transcribe(audio_file_path, language="ko")
 
         # Save the transcription to a file
         with open(output_file, "w", encoding="utf-8") as f:
@@ -30,9 +31,9 @@ def get_transcripts(audio_path: str, subtitle_path: str, start_idx: int) -> None
 
 @hydra.main(version_base='1.3', config_path='../configs', config_name='transcribe_audio.yaml')
 def main(cfg: DictConfig) -> None:
-    audio_path = f'data/{cfg.audio_dir}/korean_audio'
-    subtitle_path = f'data/{cfg.audio_dir}/korean_subtitle'
-
+    audio_path = os.path.join('data', cfg.audio_dir, 'korean_audio')
+    subtitle_path = os.path.join('data', cfg.audio_dir, 'korean_subtitle')
+    
     if not os.path.exists(subtitle_path):
         os.makedirs(subtitle_path)
 
