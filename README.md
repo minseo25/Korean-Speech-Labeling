@@ -1,4 +1,4 @@
-## _Project Setting_
+## _Project Setting (for mac)_
 
 install poetry
 
@@ -18,10 +18,29 @@ install ffmpeg (for managing audio files)
 brew install ffmpeg
 ```
 
-if windows, may need to re-install torch like this to enable GPU acceleration with CUDA support
+## _Project Setting (for windows)_
+
+install poetry and add a path to a system environment variable (`C:\Users\[Username]\AppData\Roaming\Python\Scripts`)
+
+```shell
+curl -sSL https://install.python-poetry.org | python -
+# if above command doesn't work, then ...
+(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
 ```
+
+install dependencies (requires python >= 3.10)
+```shell
+poetry install
+```
+
+install ffmpeg (for managing audio files) : https://jeongdev55.tistory.com/111
+
+reinstall torch & torchaudio for cuda support
+```shell
 poetry run pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 ```
+
+install make : https://jstar0525.tistory.com/264
 
 ## _Workflow_
 

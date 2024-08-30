@@ -14,8 +14,11 @@ def convert_m4a_to_wav(m4a_path: str, wav_path: str) -> None:
 
 def transcribe_audio(pipe: Pipeline, audio_file_path: str) -> dict:
     # Convert .m4a to .wav
-    wav_file_path = audio_file_path.replace(".m4a", ".wav")
-    convert_m4a_to_wav(audio_file_path, wav_file_path)
+    if audio_file_path.endswith(".m4a"):
+        wav_file_path = audio_file_path.replace(".m4a", ".wav")
+        convert_m4a_to_wav(audio_file_path, wav_file_path)
+    else:
+        wav_file_path = audio_file_path
 
     # Load the wav file using torchaudio
     audio, sample_rate = torchaudio.load(wav_file_path)
