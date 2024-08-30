@@ -89,9 +89,6 @@ def main(cfg: DictConfig) -> None:
     if device.type == "cuda":
         del pipe
         torch.cuda.empty_cache()
-    elif device.type == "mps":
-        del pipe
-        torch.mps.exit()
 
 if __name__ == "__main__":
     main()

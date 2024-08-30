@@ -2,4 +2,5 @@ defaults:
   - default
   - _self_
 
-target_dir: 'syuka'  # input directory under data/, output directory under labeled_data/
+target_dir: 'syuka'   # input directory under data/, output directory under labeled_data/
+start_idx: 0          # start labeling from this index

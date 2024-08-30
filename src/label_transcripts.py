@@ -26,7 +26,7 @@ def decompose_korean(text: str) -> str:
     return decomposed_text.strip()
 
 
-def labeling(target_dir: str) -> None:
+def labeling(target_dir: str, start_idx: int) -> None:
     audio_dir = os.path.join('data', target_dir, 'korean_audio')
     subtitle_dir = os.path.join('data', target_dir, 'korean_subtitle')
     output_dir = os.path.join('labeled_data', target_dir)
@@ -37,6 +37,9 @@ def labeling(target_dir: str) -> None:
 
     with open(os.path.join(output_dir, "transcripts.txt"), "a", encoding="utf-8") as file:
         for i, audio in enumerate(audios):
+            if i < start_idx:
+                continue
+            
             print(f"Processing {i}: {audio}...")
             name = os.path.splitext(audio)[0]
             audio_output_dir = os.path.join(output_dir, str(i+1))
@@ -61,7 +64,7 @@ def labeling(target_dir: str) -> None:
 
 @hydra.main(version_base='1.3', config_path='../configs', config_name='label_transcripts.yaml')
 def main(cfg: DictConfig) -> None:
-    labeling(cfg.target_dir)
+    labeling(cfg.target_dir, cfg.start_idx)
 
 if __name__ == "__main__":
     main()
