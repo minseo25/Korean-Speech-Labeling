@@ -52,6 +52,8 @@ def labeling(target_dir: str, start_idx: int) -> None:
             with open(os.path.join(subtitle_dir, f"{name}.json"), "r", encoding="utf-8") as f:
                 data = json.load(f)
                 for j, segment in enumerate(data):
+                    if segment["timestamp"][0] is None or segment["timestamp"][1] is None:
+                        continue
                     start = segment["timestamp"][0] * 1000  # pydub는 밀리초 단위 사용
                     end = segment["timestamp"][1] * 1000
                     transcript = segment["text"]
