@@ -38,6 +38,20 @@ def find_all_consecutive_durations(durations: list, count: int = 10) -> list:
         results.append((len(durations) - consecutive, consecutive))
     return results
 
+def find_all_duplicate_transcripts(transcripts: list, min_count: int = 2) -> list:
+    results = []
+    consecutive = 1
+    for i in range(1, len(transcripts)):
+        if transcripts[i] == transcripts[i-1]:
+            consecutive += 1
+        else:
+            if consecutive >= min_count:
+                results.append((i - consecutive, consecutive))
+            consecutive = 1
+    if consecutive >= min_count:  # Check at the end of the list
+        results.append((len(transcripts) - consecutive, consecutive))
+    return results
+
 def process_transcripts(base_dir: str) -> None:
     transcript_path = os.path.join(base_dir, 'transcripts.txt')
     with open(transcript_path, 'r', encoding='utf-8') as file:
@@ -47,27 +61,35 @@ def process_transcripts(base_dir: str) -> None:
     for line in lines:
         parts = line.split('|')
         file_path = parts[0].strip()
+        transcript = parts[1].strip()
         duration = float(parts[3].strip())
         folder = os.path.dirname(file_path)
-        folder_data[folder].append((file_path, duration, line))
+        folder_data[folder].append((file_path, transcript, duration, line))
 
     new_lines = []
     
     for folder, files in folder_data.items():
-        durations = [f[1] for f in files]
-        consecutive_info = find_all_consecutive_durations(durations)
-        
-        delete_files = []
-        if consecutive_info:
-            print(f"Folder {folder} has a sequence of 10 or more consecutive .00 second durations.")
-            for start, length in consecutive_info:
-                delete_files.extend([f[0] for f in files[start:start+length]])
+        durations = [f[2] for f in files]
+        transcripts = [f[1] for f in files]
 
-            # delete wav files with 10 or more consecutive .00 second durations
-            confirm_and_delete(base_dir, delete_files, folder)
+        consecutive_duration_info = find_all_consecutive_durations(durations)
+        duplicate_transcript_info = find_all_duplicate_transcripts(transcripts)
+        
+        delete_files = set()
+        if consecutive_duration_info:
+            print(f"Folder {folder} has a sequence of 10 or more consecutive .00 second durations.")
+            for start, length in consecutive_duration_info:
+                delete_files.update([f[0] for f in files[start:start+length]])
+        if duplicate_transcript_info:
+            print(f"Folder {folder} has a sequence of 2 or more duplicate transcripts.")
+            for start, length in duplicate_transcript_info:
+                delete_files.update([f[0] for f in files[start:start+length]])
+
+        # delete wav files with 10 or more consecutive .00 second durations
+        confirm_and_delete(base_dir, list(delete_files), folder)
         
         # now update the transcript file (with the deleted files removed)
-        new_lines.extend([f[2] for f in files if f[0] not in delete_files])
+        new_lines.extend([f[3] for f in files if f[0] not in delete_files])
 
     with open(transcript_path, 'w', encoding='utf-8') as file:
         file.writelines(new_lines)
