@@ -86,3 +86,11 @@ STEP4. postprocess dataset
 ```shell
 make postprocess
 ```
+
+STEP5. convert dataset suitable for training (parquet format)
+- set `configs/export_to_parquet.yaml`
+- and "딸깍"
+
+```shell
+make convert
+```

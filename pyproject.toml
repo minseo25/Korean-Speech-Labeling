@@ -17,6 +17,8 @@ torch = "^2.4.0"
 torchaudio = "^2.4.0"
 numpy = "<2.0.0"
 soundfile = "^0.12.1"
+pandas = "^2.2.2"
+pyarrow = "^17.0.0"
 
 [build-system]
 requires = ["poetry-core"]

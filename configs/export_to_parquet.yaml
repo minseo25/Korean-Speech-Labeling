@@ -1,0 +1,6 @@
+defaults:
+  - default
+  - _self_
+
+target_dir: 'syuka'  # target directory under labeled_data/
+MAX_SAMPLES: 2500    # maximum number of samples to export in a single parquet file (runtime error if too large)

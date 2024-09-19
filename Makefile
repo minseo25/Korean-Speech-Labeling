@@ -19,3 +19,6 @@ label: ## Label korean audio files and transcriptions
 
 postprocess: ## Postprocess dataset (inaccurate segmentation)
 	poetry run python src/postprocess_labels.py
+
+convert: ## Convert dataset to parquet format
+	poetry run python src/export_to_parquet.py
