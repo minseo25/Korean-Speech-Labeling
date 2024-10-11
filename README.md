@@ -1,3 +1,9 @@
+## _About Project_
+
+한국어 특화 TTS model 학습을 위해 음성 데이터셋을 제작하는 코드.
+
+유튜브 영상에서 음원을 추출하고, 전처리하고, whisper STT 모델을 통해 transcript를 얻고, 후처리 및 labeling을 진행한다.
+
 ## _Project Setting (for mac)_
 
 install poetry
